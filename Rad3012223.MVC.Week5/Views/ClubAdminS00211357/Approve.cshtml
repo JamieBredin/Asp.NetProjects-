@@ -1,0 +1,114 @@
+﻿@model Rad3012223.MVC.Week5.Models.ClubViewModels
+
+@{
+    ViewBag.Title = "Approve";
+}
+
+<h2>Approve</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Club</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ClubID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ClubID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ClubID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.clubName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.clubName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.clubName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.clubName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.creationDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CreationDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CreationDate, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.AdminID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.adminID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.adminID, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<h3>
+    Revoke Membership
+</h3>
+<table class="table table-striped table-bordered table-responsive">
+    <tr>
+        <th>Member To Be Revoked</th>
+        <th>Click to Revoke</th>
+    </tr>
+
+    @for (int i = 0; i < Model.Approved.Count(); i++)
+    {
+        @Html.HiddenFor(model => Model.Approved[i].MemberID)
+        <tr>
+            <td>
+                @Html.Label(Model.Approved[i].studentMember.FirstName + " " + Model.Approved[i].studentMember.SecondName,
+            new { htmlAttributes = new { @class = "form-check-label" } })
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => Model.Approved[i].approved,
+            new { htmlAttributes = new { @class = "form-check-input" } })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<h3>
+    Approve Membership
+</h3>
+<table class="table table-striped table-bordered table-responsive">
+    <tr>
+        <th>Member To Be Approve</th>
+        <th>Click to Approve</th>
+    </tr>
+
+    @for (int i = 0; i < Model.Unapproved.Count(); i++)
+    {
+        @Html.HiddenFor(model => Model.Unapproved[i].MemberID)
+        <tr>
+            <td>
+                @Html.Label(Model.Unapproved[i].studentMember.FirstName + " " + Model.Unapproved[i].studentMember.SecondName,
+            new { htmlAttributes = new { @class = "form-check-label" } })
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => Model.Unapproved[i].approved,
+            new { htmlAttributes = new { @class = "form-check-input" } })
+            </td>
+        </tr>
+    }
+
+</table>
+}

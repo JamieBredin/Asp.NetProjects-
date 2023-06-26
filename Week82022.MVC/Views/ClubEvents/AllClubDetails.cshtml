@@ -1,0 +1,52 @@
+﻿
+@using ClubModels;
+@model IEnumerable<Club>
+
+@{
+    ViewBag.Title = "AllClubDetails";
+}
+
+<h2>All Club Details</h2>
+@*A form to post back to the smae controller a search term*@
+<form method="get">
+    <input type="search" name="ClubName" value="@ViewBag.cname" />
+    <input type="submit" name="Search by Club Name" />
+</form>
+
+@foreach (Club c in Model)
+{
+    <h3>
+        @Html.DisplayFor(m => c.ClubName, new { @class = "control-label" })
+    </h3>
+
+    <table class="table">
+        <tr>
+            <th align="left">Venue</th>
+            <th align="left">Location</th>
+            <th align="left">Start Date</th>
+            <th align="left">End Date</th>
+            <th></th>
+        </tr>
+
+        @foreach (ClubEvent ce in c.clubEvents)
+         {
+            <tr>
+                <td align="left">
+                    @Html.DisplayFor(modelItem => ce.Venue)
+                </td>
+                <td align="left">
+                    @Html.DisplayFor(modelItem => ce.Location)
+                </td>
+                <td align="left">
+                    @Html.DisplayFor(modelItem => ce.StartDateTime)
+                </td>
+                <td align="left">
+                    @Html.DisplayFor(modelItem => ce.EndDateTime)
+                </td>
+            </tr>
+         }
+    </table>
+}
+@Html.ActionLink("Back to List", "Index")
+
+

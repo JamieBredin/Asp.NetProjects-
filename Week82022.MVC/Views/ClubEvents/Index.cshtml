@@ -1,0 +1,36 @@
+﻿
+@model ClubModels.Club
+    
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Show Club Events</h2>
+
+@using(Html.BeginForm(new {id = Model.ClubId}))
+{
+                @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(model => model.ClubId,
+       new { @class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.ClubId,
+           (IEnumerable<SelectListItem>)ViewBag.Clubs,
+           new
+           {
+               @class="form-control",
+               Title="Choose your Club from the list"
+           })
+            @Html.ValidationMessageFor(model=>model.ClubId)
+        </div>
+        @Html.Partial("_ClubEvents", Model.clubEvents.ToList());
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Show Events" class="btn btn-default"/>
+            </div>
+        </div>
+    </div>
+}
+
+
+

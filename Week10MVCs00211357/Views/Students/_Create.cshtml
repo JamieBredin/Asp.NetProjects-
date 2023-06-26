@@ -1,0 +1,71 @@
+﻿@model Week10ClubDomain22.Student
+
+@{
+    ViewBag.Title = "Create";
+}
+@using (Html.BeginForm("_Create","Students", FormMethod.Post, new {id="create_student" })) 
+{
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal" aria-hidden="True">&times;</a>
+        <h4 class="modal-title">Add New Student</h4>
+    </div>
+    <div class="modal-body">
+        <p id="MessageToClient" class="text-danger"></p>
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.StudentID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.StudentID, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.StudentID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SecondName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SecondName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SecondName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DateRegistered, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.DateRegistered, new
+           {
+               @type = "datetime-local",
+               @class = "form-control",
+               @Value = Model.DateRegistered.ToString("yyyy-MM-ddThh:mm")
+           })
+                @Html.ValidationMessageFor(model => model.DateRegistered, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    
+ 
+            </div>
+</div>
+
+<div class="modal-footer">
+    <a class="btn btn-default" data-dismiss="modal">Cancel</a>
+    <input class="btn btn-primary" type="submit" value="Add"/>
+</div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

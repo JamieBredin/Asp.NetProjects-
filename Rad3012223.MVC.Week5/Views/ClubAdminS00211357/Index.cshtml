@@ -1,0 +1,42 @@
+﻿@model IEnumerable<RAD3012223Week5.Club>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Choose Club to Approve Members</h2>
+<h3>Logged in as Club Admin @ViewBag.Name</h3>
+
+<table class="table table-striped table-bordered table-responsive">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ClubName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </th>
+        <th class="text-center">
+            Approve Member for Chosen Club
+        </th>
+    </tr>
+</table>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClubName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreationDate)
+        </td>
+
+        <td>
+            @Html.ActionLink("Approve Members", "Approve",
+           new { ClubId = item.ClubId },
+           new { @class = "center-block btn btn-primary" })
+        </td>
+    </tr>
+}
+
+

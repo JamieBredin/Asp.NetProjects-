@@ -1,0 +1,76 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<Week10ClubDomain22.Student>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@*Week 11 Lab*@
+<div id="studentCreateModal" class="modal fade in">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="studentCreateModalContent"></div>
+        </div>
+    </div>
+</div>
+
+    @*@Html.ActionLink("Create New", "Create")*@
+@Html.ActionLink("Create Student", "_Create", "Students", new {@class="btn btn-primary btn-xs", data_modal=""})
+
+@using (Html.BeginForm("Index","Students",FormMethod.Get,new {@class = "form-inline"}))
+            {
+                <div class="form-group">
+                    @Html.Label("Search", "First Name or Second Name", htmlAttributes: new {@class = "control-label"})
+                    @Html.TextBox("search", ViewBag.CurrentSearh as string, new { htmlAttributes = new {@class = "form-control"}})
+                    <input type="submit" value="Filter" class="btn btn-primary"/>
+                </div>
+            }
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("First Name", "Index", new {sort = ViewBag.FnameSort, search = ViewBag.CurrentSearch})
+        </th>
+        <th>
+            @Html.ActionLink("Second Name", "Index", new { sort = ViewBag.SnameSort, search = ViewBag.CurrentSearch })
+        </th>
+        <th>
+            @Html.ActionLink("Reg. Date", "Index", new { sort = ViewBag.DateSort, search = ViewBag.CurrentSearch })
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SecondName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateRegistered)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.StudentID }, new {@class = "btn btn-success btn-xs"}) 
+            @Html.ActionLink("Details", "Details", new { id=item.StudentID }, new { @class = "btn btn-warning btn-xs" }) 
+            @Html.ActionLink("Delete", "Delete", new { id=item.StudentID }, new { @class = "btn btn-danger btn-xs" })
+        </td>
+    </tr>
+}
+
+</table>
+
+<div class="page-count">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+</div>
+<div class="pagination">
+    @Html.PagedListPager(Model, page =>
+Url.Action("Index", new {sort = ViewBag.CurrenSort, search = ViewBag.CurrentSearch, page}))
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/studentModal.js"></script>
+    }
